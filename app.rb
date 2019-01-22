@@ -10,3 +10,8 @@ end
 get '/new' do
 	erb :new
 end
+
+post '/method' do
+  @post = params['post']
+	erb " #{@post}"
+end
