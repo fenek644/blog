@@ -11,11 +11,15 @@ def init_db
 end
 
 before do
+  #  инициализация БД;
   init_db
 end
 
+#  создается каждый раз при иконфигурации (составлении) приложения
+# когда изменяется код программы или перезагружается страница
 configure do
   init_db
+  # создает таблицу, если таблица не существует, в противном случае с существующей таблицей ничего не происходит.
 	@db.execute 'CREATE TABLE IF NOT EXISTS Posts
   (
 		id	INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -34,5 +38,12 @@ end
 
 post '/method' do
   @post = params['post']
-	erb " #{@post}"
+
+  if @post.strip.length == 0
+    @error = "Ваше сообщение пусто. Введите какойнибуть текст."
+    erb :new
+  else
+		erb " #{@post}"
+  end
+
 end
