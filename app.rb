@@ -43,6 +43,8 @@ post '/method' do
     @error = "Ваше сообщение пусто. Введите какойнибуть текст."
     erb :new
   else
+		@db.execute 'insert into Posts (content, create_date) values (?, datetime())', [@post]
+
 		erb " #{@post}"
   end
 
