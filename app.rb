@@ -1,7 +1,6 @@
 #encoding: utf-8
 require 'rubygems'
 require 'sinatra'
-# require 'sinatra/contrib'
 require 'sinatra/reloader'
 require 'sqlite3'
 
@@ -65,14 +64,7 @@ post '/new' do
     redirect('/')
   end
 
-  # if @post.strip.length == 0
-  #   @error = "Ваше сообщение пусто. Введите какойнибуть текст."
-  #   erb :new
-  # else
-	# 	@db.execute 'insert into Posts (content, create_date) values (?, datetime())', [@post]
-  #
-	# 	erb :index
-  # end
+
 
 end
 
@@ -80,14 +72,14 @@ get "/details/:post_id" do
   # получаем параметр из URL
   post_id = params[:post_id]
 
-  # аолучаем массив срочек из базы с данныи идентификатором
-  #  он будет состаять из одной хеша
+  # получаем массив срочек из базы с данныи идентификатором
+  #  он будет состоять из одной хеша
   result = @db.execute "select * from Posts where id = (?)", [post_id]
   # берем эту строчку
   @row = result[0]
 
   #отображаем комменты к этому посту
-    # @rows = @db.execute 'select * from Comments order by id desc '
+
     @rows = @db.execute 'select * from Comments  where post_id = ? order by id desc', [post_id]
   #возвращаем представление details.erb
   erb :details
@@ -106,8 +98,6 @@ post "/details/:post_id" do
     erb :details
   else
     @db.execute 'insert into Comments (content, post_id, create_date) values (?, ?, datetime())', [comment, post_id]
-
-    # erb :index
 
      redirect("/details/" + post_id)
      erb "You enter comment ---#{comment} for post with id = #{post_id}"
