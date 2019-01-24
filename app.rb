@@ -62,3 +62,11 @@ get "/details/:post_id" do
   #возвращаем представление details.erb
   erb :details
 end
+
+post "/details/:post_id" do
+  # получаем параметр из URL
+  post_id = params[:post_id]
+  comment = params[:comment]
+
+  erb "You enter comment ---#{comment} for post with id = #{post_id}"
+end
