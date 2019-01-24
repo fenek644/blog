@@ -6,3 +6,14 @@
   <%= @row['create_date'] %><br />
 <!--  <a href="/details/<%#= row['id'] %>"> Comments </a>-->
 </p>
+
+<h3>Add New Comment </h3>
+
+<p>
+<form action="/details/<%= @row['id'] %>" method="POST">
+  <textarea name="comment" class="form-control" placeholder="type your comment here" rows="6"></textarea>
+  <br />
+
+  <button type="submit" class="btn btn-primary">Add comment</button>
+</form>
+</p>

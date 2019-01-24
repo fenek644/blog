@@ -36,7 +36,7 @@ get '/new' do
 	erb :new
 end
 
-post '/method' do
+post '/new' do
   @post = params['post']
 
   if @post.strip.length == 0
@@ -51,10 +51,14 @@ post '/method' do
 end
 
 get "/details/:post_id" do
+  # получаем параметр из URL
   post_id = params[:post_id]
 
+  # аолучаем массив срочек из базы с данныи идентификатором
+  #  он будет состаять из одной хеша
   result = @db.execute "select * from Posts where id = (?)", [post_id]
+  # берем эту строчку
   @row = result[0]
-  
+  #возвращаем представление details.erb
   erb :details
 end
