@@ -49,3 +49,8 @@ post '/method' do
   end
 
 end
+
+get "/details/:post_id" do
+  post_id = params[:post_id]
+  erb "Displaying information of the post with id = #{post_id}"
+end
