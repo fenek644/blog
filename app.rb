@@ -12,7 +12,7 @@ end
 
 before do
   #  инициализация БД;
-  init_db
+   init_db
 end
 
 #  создается каждый раз при иконфигурации (составлении) приложения
@@ -29,7 +29,7 @@ configure do
 end
 
 get '/' do
-	erb "Hello! <a href=\"https://github.com/bootstrap-ruby/sinatra-bootstrap\">Original</a> pattern has been modified for <a href=\"http://rubyschool.us/\">Ruby School</a>"			
+	erb :index
 end
 
 get '/new' do
@@ -45,7 +45,7 @@ post '/method' do
   else
 		@db.execute 'insert into Posts (content, create_date) values (?, datetime())', [@post]
 
-		erb " #{@post}"
+		erb :index
   end
 
 end
