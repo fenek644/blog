@@ -24,7 +24,8 @@ configure do
   (
 		id	INTEGER PRIMARY KEY AUTOINCREMENT,
 		create_date	DATE,
-		content	TEXT
+		content	TEXT,
+    author TEXT
 	)'
 
   @db.execute 'CREATE TABLE IF NOT EXISTS Comments
@@ -45,16 +46,33 @@ get '/new' do
 end
 
 post '/new' do
-  @post = params['post']
+  @post = params[:post]
+  @author = params[:author]
 
-  if @post.strip.length == 0
-    @error = "Ваше сообщение пусто. Введите какойнибуть текст."
-    erb :new
+  hh = {
+      :author => "Введите имя автора поста",
+      :post => "Ваше сообщение пусто - введите текст сообщения",
+  }
+
+  @error = hh.select {|key, | params[key] == ""}.values.join(", ")
+
+  if @error != ""
+    return  erb :new
   else
-		@db.execute 'insert into Posts (content, create_date) values (?, datetime())', [@post]
+    @error = NIL
+    @db.execute 'insert into Posts (content, author, create_date) values ( ?, ?, datetime())', [@post, @author]
 
-		erb :index
+    redirect('/')
   end
+
+  # if @post.strip.length == 0
+  #   @error = "Ваше сообщение пусто. Введите какойнибуть текст."
+  #   erb :new
+  # else
+	# 	@db.execute 'insert into Posts (content, create_date) values (?, datetime())', [@post]
+  #
+	# 	erb :index
+  # end
 
 end
 

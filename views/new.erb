@@ -2,8 +2,14 @@
 
 <p>
   <form action="/new" method="POST">
-    <textarea name="post" class="form-control" placeholder="type your post here" rows="6"></textarea>
-    <br />
+    <div class="form-group">
+      <label>Ваше имя</label>
+      <input name="author" type="text" class="form-control"  placeholder="Введите имя" value="<%= @author %>">
+    </div>
+    <div class="form-group">
+      <label>Введите текст поста</label>
+      <textarea name="post" class="form-control" placeholder="type your post here" rows="6"><%= @post %></textarea>
+    </div>
 
     <button type="submit" class="btn btn-primary">Submit</button>
   </form>

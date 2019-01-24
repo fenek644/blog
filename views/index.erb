@@ -1,6 +1,7 @@
 <h1> Latest post</h1><br />
 
 <%@db.execute 'select * from Posts order by id desc' do |row| %>
+  <h4> пишет <%= row['author'] %></h4>
    <h4><%= row['content'] %></h4>
   <p>
 <!--    дата поста-->
