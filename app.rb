@@ -67,6 +67,10 @@ get "/details/:post_id" do
   result = @db.execute "select * from Posts where id = (?)", [post_id]
   # берем эту строчку
   @row = result[0]
+
+  #отображаем комменты к этому посту
+    # @rows = @db.execute 'select * from Comments order by id desc '
+    @rows = @db.execute 'select * from Comments  where post_id = ? order by id desc', [post_id]
   #возвращаем представление details.erb
   erb :details
 end
@@ -87,6 +91,7 @@ post "/details/:post_id" do
 
     # erb :index
 
+     redirect("/details/" + post_id)
      erb "You enter comment ---#{comment} for post with id = #{post_id}"
   end
 end

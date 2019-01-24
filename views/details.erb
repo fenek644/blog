@@ -17,3 +17,14 @@
   <button type="submit" class="btn btn-primary">Add comment</button>
 </form>
 </p>
+
+<h3><span style="background-color: #2a6496; color: ghostwhite;">Уже сделанные комменты</span></h3>
+
+<% @rows.each do |row| %>
+<h4><%= row['content'] %></h4>
+<p>
+  <!--    дата поста-->
+  <%= row['create_date'] %><br />
+
+</p>
+<% end%>
