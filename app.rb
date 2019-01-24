@@ -26,6 +26,14 @@ configure do
 		create_date	DATE,
 		content	TEXT
 	)'
+
+  @db.execute 'CREATE TABLE IF NOT EXISTS Comments
+  (
+		id	INTEGER PRIMARY KEY AUTOINCREMENT,
+		create_date	DATE,
+		content	TEXT,
+    post_id INTEGER
+	)'
 end
 
 get '/' do
@@ -68,5 +76,17 @@ post "/details/:post_id" do
   post_id = params[:post_id]
   comment = params[:comment]
 
-  erb "You enter comment ---#{comment} for post with id = #{post_id}"
+  if comment.strip.length == 0
+    @error = "Ваш комментарий пуст. Введите какойнибуть текст."
+    result = @db.execute "select * from Posts where id = (?)", [post_id]
+    # берем эту строчку
+    @row = result[0]
+    erb :details
+  else
+    @db.execute 'insert into Comments (content, post_id, create_date) values (?, ?, datetime())', [comment, post_id]
+
+    # erb :index
+
+     erb "You enter comment ---#{comment} for post with id = #{post_id}"
+  end
 end
